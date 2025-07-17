@@ -1,0 +1,229 @@
+openapi: 3.0.3
+info:
+  title: Match Odds API
+  version: 1.0.0
+  description: API for managing sports matches and betting odds.
+
+servers:
+  - url: http://localhost:8080
+
+tags:
+  - name: Match Controller
+    description: Endpoints for managing matches
+  - name: Match Odds Controller
+    description: Endpoints for managing match odds
+
+paths:
+
+  /api/matches:
+    get:
+      tags:
+        - Match Controller
+      summary: Get all matches
+      responses:
+        '200':
+          description: List of matches
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Match'
+    post:
+      tags:
+        - Match Controller
+      summary: Create a new match
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Match'
+      responses:
+        '201':
+          description: Match created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Match'
+
+  /api/matches/{id}:
+    get:
+      tags:
+        - Match Controller
+      summary: Get a match by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Match found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Match'
+        '404':
+          description: Match not found
+    put:
+      tags:
+        - Match Controller
+      summary: Update a match
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Match'
+      responses:
+        '200':
+          description: Match updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Match'
+    delete:
+      tags:
+        - Match Controller
+      summary: Delete a match
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Match deleted
+
+  /api/odds:
+    get:
+      tags:
+        - Match Odds Controller
+      summary: Get all match odds
+      responses:
+        '200':
+          description: List of match odds
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MatchOdds'
+    post:
+      tags:
+        - Match Odds Controller
+      summary: Create match odds
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MatchOdds'
+      responses:
+        '201':
+          description: Match odd created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MatchOdds'
+
+  /api/odds/{id}:
+    get:
+      tags:
+        - Match Odds Controller
+      summary: Get match odds by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Match odd found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MatchOdds'
+        '404':
+          description: Match odd not found
+    put:
+      tags:
+        - Match Odds Controller
+      summary: Update match odd
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MatchOdds'
+      responses:
+        '200':
+          description: Match odd updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MatchOdds'
+    delete:
+      tags:
+        - Match Odds Controller
+      summary: Delete match odd
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Match odd deleted
+
+components:
+  schemas:
+    Match:
+      type: object
+      properties:
+        description:
+          type: string
+        matchDate:
+          type: string
+          format: date
+        matchTime:
+          type: string
+          format: time
+          example: "14:30:00"
+        teamA:
+          type: string
+        teamB:
+          type: string
+        sport:
+          type: string
+          enum: [FOOTBALL, BASKETBALL]
+
+    MatchOdds:
+      type: object
+      properties:
+        specifier:
+          type: string
+        odd:
+          type: number
+          format: double
+        matchId:
+          type: number
+          format: double
+          example: 1

@@ -1,0 +1,17 @@
+openapi: 3.0.1
+info:
+  title: My API
+  version: 1.0.0
+  description: Sample API documentation
+
+servers:
+  - url: http://localhost:8080
+    description: Local server
+
+paths:
+  /api/hello:
+    get:
+      summary: Say Hello
+      responses:
+        '200':
+          description: Success
